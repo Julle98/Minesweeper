@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miinaharava</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info button {
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .info p {
+            font-size: 12px;
+            margin: 5px 0 0 0;
+        }
+        .difficulty {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .difficulty button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .board {
+            display: grid;
+            gap: 1px;
+            background-color: #333;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 30px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+        .cell.revealed {
+            background-color: #eee;
+        }
+        .cell.flag {
+            background-color: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Miinaharava</h1>
+        <button id="toggle-auth-btn" onclick="toggleAuth()">Kirjaudu/Rekisteröidy</button>
+        <div id="auth" style="display: none;">
+            <h2>Kirjaudu sisään</h2>
+            <form id="login-form" onsubmit="login(event)">
+                <input type="text" id="username" placeholder="Käyttäjänimi" required>
+                <input type="password" id="password" placeholder="Salasana" required>
+                <button type="submit">Kirjaudu</button>
+            </form>
+            <h2>Rekisteröidy</h2>
+            <form id="register-form" onsubmit="register(event)">
+                <input type="text" id="new-username" placeholder="Käyttäjänimi" required>
+                <input type="password" id="new-password" placeholder="Salasana" required>
+                <button type="submit">Rekisteröidy</button>
+            </form>
+        </div>
+        <button id="user-panel-btn" onclick="toggleUserPanel()">Hallintapaneeli</button>
+        <div id="user-panel" style="display: none;">
+            <h2>Käyttäjän hallintapaneeli</h2>
+            <form id="change-password-form" onsubmit="changePassword(event)">
+                <h3>Vaihda salasana</h3>
+                <input type="password" id="current-password" placeholder="Nykyinen salasana" required>
+                <input type="password" id="new-password" placeholder="Uusi salasana" required>
+                <button type="submit">Vaihda salasana</button>
+            </form>
+            <form id="delete-user-form" onsubmit="deleteUser(event)">
+                <h3>Poista käyttäjä</h3>
+                <input type="password" id="password" placeholder="Salasana" required>
+                <input type="password" id="confirm-password" placeholder="Vahvista salasana" required>
+                <button type="submit">Poista käyttäjä</button>
+            </form>
+        </div>
+    </div>
+    <div class="info">
+        <button id="logout-btn" onclick="logout()">Kirjaudu ulos</button>
+        <button onclick="showInstructions()">Ohjeet</button>
+        <p>High Score: <span id="high-score">0</span></p>
+    </div>
+    <div class="difficulty">
+        <button onclick="startGame(5, 5)">Helppo</button>
+        <button onclick="startGame(10, 15)">Keskitaso</button>
+        <button onclick="startGame(15, 30)">Vaikea</button>
+    </div>
+    <div id="game-info">
+        <p>💣 Pommeja: <span id="bomb-count">10</span></p>
+        <p>🚩 Lippuja jäljellä: <span id="flag-count">10</span></p>
+    </div>
+    <div class="board" id="game-board"></div>
+    <button id="restart-btn" style="display: none;" onclick="restartGame()">Aloita alusta</button>
+    <script src="/static/script.js"></script>
+</body>
+</html>
