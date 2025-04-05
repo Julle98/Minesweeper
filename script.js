@@ -1,10 +1,8 @@
-// Globaali tila
 let gameOver = false;
 let totalBombs = 0;
 let remainingFlags = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 
-// Päivitä high score näkyville heti alussa
 document.getElementById('high-score').textContent = highScore;
 
 function showInstructions() {
@@ -30,24 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    toggleUserPanelVisibility(); // Päivitä hallintapaneelin näkyvyys
+    toggleUserPanelVisibility(); 
 
-    // Päivitä näkyvä High Score arvo
     const highScore = localStorage.getItem('highScore') || 0;
     document.getElementById('high-score').textContent = highScore;
 });
 
-// "Aloita alusta" -toiminto
 function restartGame() {
     console.log('Peli käynnistetään uudelleen...');
-    document.getElementById('restart-btn').style.display = 'none'; // Piilota restart-nappula
+    document.getElementById('restart-btn').style.display = 'none'; 
     gameOver = false;
-    startGame(5, 5); // Aloita uusi peli esimerkiksi helpolla vaikeustasolla
+    startGame(5, 5); 
 }
 
-// Kirjaudu sisään -toiminto
 function login(event) {
-    event.preventDefault(); // Estetään lomakkeen oletuskäyttäytyminen
+    event.preventDefault(); 
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -58,7 +53,7 @@ function login(event) {
     }
 
     const isProcessing = document.body.getAttribute('data-login-processing');
-    if (isProcessing === 'true') return; // Estetään kaksoiskutsu
+    if (isProcessing === 'true') return; 
 
     document.body.setAttribute('data-login-processing', 'true');
 
@@ -74,12 +69,11 @@ function login(event) {
         } else {
             alert(data.message);
 
-            // Tallenna käyttäjän tiedot
-            localStorage.setItem('userLoggedIn', true); // Merkitään käyttäjä kirjautuneeksi
-            localStorage.setItem('highScore', data.high_score || 0); // Päivitä High Score -tieto
-            document.getElementById('high-score').textContent = data.high_score || 0; // Päivitä DOM:iin
-            toggleAuth(); // Piilota kirjautumisikkuna
-            toggleUserPanelVisibility(); // Näytä hallintapaneeli
+            localStorage.setItem('userLoggedIn', true); 
+            localStorage.setItem('highScore', data.high_score || 0); 
+            document.getElementById('high-score').textContent = data.high_score || 0; 
+            toggleAuth(); 
+            toggleUserPanelVisibility(); 
         }
     })
     .catch(error => {
@@ -91,10 +85,9 @@ function login(event) {
     });
 }
 
-// Kirjaudu ulos -toiminto
 function logout() {
     const isProcessing = document.body.getAttribute('data-logout-processing');
-    if (isProcessing === 'true') return; // Estetään kaksoiskutsu
+    if (isProcessing === 'true') return; 
 
     document.body.setAttribute('data-logout-processing', 'true');
 
@@ -109,11 +102,10 @@ function logout() {
         } else {
             alert(data.message);
             
-            // Tyhjennetään käyttäjän tiedot
-            localStorage.removeItem('userLoggedIn'); // Poista kirjautumistieto
-            localStorage.removeItem('highScore'); // Poista High Score -tieto
-            document.getElementById('high-score').textContent = 0; // Päivitä DOM:iin
-            toggleUserPanelVisibility(); // Piilota hallintapaneeli
+            localStorage.removeItem('userLoggedIn'); 
+            localStorage.removeItem('highScore'); 
+            document.getElementById('high-score').textContent = 0; 
+            toggleUserPanelVisibility(); 
         }
     })
     .catch(error => {
@@ -125,22 +117,19 @@ function logout() {
     });
 }
 
-// Tarkista hallintapaneelin näkyvyys kirjautumistilan perusteella
 function toggleUserPanelVisibility() {
     const userPanel = document.getElementById('user-panel');
-    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); // Tarkistetaan kirjautumistieto
+    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); 
 
-    userPanel.style.display = userLoggedIn ? 'block' : 'none'; // Näytä vain, jos käyttäjä on kirjautunut
+    userPanel.style.display = userLoggedIn ? 'block' : 'none'; 
 }
 
 
-// "Hallintapaneeli" -nappula
 function toggleUserPanel() {
     const userPanel = document.getElementById('user-panel');
     const userLoggedIn = !!localStorage.getItem('userLoggedIn');
 
     if (userLoggedIn) {
-        // Vaihdetaan hallintapaneelin näkyvyys
         userPanel.style.display = userPanel.style.display === 'none' ? 'block' : 'none';
     } else {
         alert('Et ole kirjautunut sisään! Hallintapaneeli ei ole käytettävissä.');
@@ -148,25 +137,23 @@ function toggleUserPanel() {
 }
 
 
-// Pelin aloitustoiminto
 function startGame(rows, bombs) {
     console.log(`Peli käynnistyy: ${rows}x${rows} laudalla ja ${bombs} pommilla.`);
     const board = document.getElementById('game-board');
-    board.innerHTML = ''; // Tyhjennetään edellinen pelilauta
+    board.innerHTML = ''; 
     gameOver = false;
 
-    const columns = rows; // Käytetään neliölautaa
+    const columns = rows; 
     const totalCells = rows * columns;
     totalBombs = bombs;
     remainingFlags = bombs;
 
-    setupBoard(rows, columns, bombs); // Generoi uusi pelilauta
-    document.getElementById('game-info').style.display = 'flex'; // Näytä pelitiedot
-    document.getElementById('restart-btn').style.display = 'none'; // Piilota uudelleenkäynnistysnappi
-    updateGameInfo(); // Päivitä laskurit
+    setupBoard(rows, columns, bombs); 
+    document.getElementById('game-info').style.display = 'flex'; 
+    document.getElementById('restart-btn').style.display = 'none'; 
+    updateGameInfo(); 
 }
 
-// Luo pelilauta
 function setupBoard(rows, columns, bombs) {
     const board = document.getElementById('game-board');
     board.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
@@ -204,14 +191,13 @@ function setupBoard(rows, columns, bombs) {
     }
 }
 
-// Liputa solu (oikea hiiren klikkaus)
 function toggleFlag(cell) {
     if (gameOver || cell.classList.contains('revealed')) return;
 
     if (cell.classList.contains('flag')) {
         // Poista lippu
         cell.classList.remove('flag');
-        cell.textContent = ''; // Tyhjennä teksti
+        cell.textContent = ''; 
         remainingFlags++;
     } else if (remainingFlags > 0) {
         // Aseta lippu
@@ -220,7 +206,6 @@ function toggleFlag(cell) {
         remainingFlags--;
     }
 
-    // Päivitä jäljellä olevien lippujen määrä
     updateGameInfo();
 }
 
@@ -237,9 +222,8 @@ function handleCellClick(cell, row, column, rows, columns) {
         cell.textContent = bombCount || '';
         if (bombCount === 0) revealSafeArea(row, column, rows, columns);
 
-        // Päivitä High Score paljastuksen jälkeen
-        updateHighScore(); // Kutsu funktiota aina paljastuksen jälkeen
-        checkWin(); // Tarkista, saavutettiinko voitto
+        updateHighScore(); 
+        checkWin(); 
     }
 }
 
@@ -270,7 +254,6 @@ function updateHighScore() {
     }
 }
 
-// Lasketaan viereisten pommien määrä
 function countAdjacentBombs(row, column, rows, columns) {
     const directions = [
         [-1, -1], [-1, 0], [-1, 1],
@@ -293,23 +276,21 @@ function countAdjacentBombs(row, column, rows, columns) {
 
 function toggleUserPanelVisibility(forceShow) {
     const userPanel = document.getElementById('user-panel');
-    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); // Tarkistetaan kirjautumistila
+    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); 
 
     if (userLoggedIn) {
         if (typeof forceShow === 'boolean') {
-            // Näytä tai piilota hallintapaneeli riippuen "forceShow"-parametrista
+            
             userPanel.style.display = forceShow ? 'block' : 'none';
         } else {
-            // Näytetään tai piilotetaan nykytilan mukaan
             userPanel.style.display = userPanel.style.display === 'none' ? 'block' : 'none';
         }
     } else {
-        // Piilotetaan, jos käyttäjä ei ole kirjautunut
         userPanel.style.display = 'none';
     }
 }
 
-// Paljasta turvallinen alue
+
 function revealSafeArea(row, column, rows, columns) {
     const directions = [
         [-1, -1], [-1, 0], [-1, 1],
@@ -329,22 +310,22 @@ function revealSafeArea(row, column, rows, columns) {
     });
 }
 
-// Päivitä pelitiedot
+
 function updateGameInfo() {
     document.getElementById('bomb-count').textContent = totalBombs || 0;
     document.getElementById('flag-count').textContent = remainingFlags || 0;
 }
 
-// Näytä/piilota kirjautumisikkuna
+
 function toggleAuth() {
     const authContainer = document.getElementById('auth');
     const userPanel = document.getElementById('user-panel');
 
-    // Vaihdetaan vain kirjautumisruudun näkyvyyttä
+    
     if (authContainer) {
         authContainer.style.display = authContainer.style.display === 'none' ? 'block' : 'none';
 
-        // Jos kirjautumisruutu on näkyvissä, piilotetaan hallintapaneeli
+        
         if (authContainer.style.display === 'block') {
             userPanel.style.display = 'none';
         }
@@ -353,23 +334,23 @@ function toggleAuth() {
 
 function toggleUserPanelVisibility(show) {
     const userPanel = document.getElementById('user-panel');
-    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); // Tarkistetaan kirjautumistieto
+    const userLoggedIn = !!localStorage.getItem('userLoggedIn'); 
 
     if (!userLoggedIn || show === false) {
-        userPanel.style.display = 'none'; // Piilotetaan hallintapaneeli, ellei käyttäjä ole kirjautunut
+        userPanel.style.display = 'none'; 
     } else if (show === true) {
-        userPanel.style.display = 'block'; // Näytetään hallintapaneeli vain pyynnöstä
+        userPanel.style.display = 'block'; 
     }
 }
 
-// Esimerkki voittotarkistus ja pelin päättäminen
+
 function endGame(won) {
     gameOver = true;
-    document.getElementById('restart-btn').style.display = 'block'; // Näytä uudelleenkäynnistysnappi
+    document.getElementById('restart-btn').style.display = 'block'; 
 
     if (won) {
         alert('Voitit! Onnittelut!');
-        updateHighScore(); // Päivitä High Score vain voiton yhteydessä
+        updateHighScore(); 
     } else {
         alert('Hävisit! Miina räjähti!');
         document.querySelectorAll('.cell[data-bomb="true"]').forEach(cell => {
