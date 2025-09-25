@@ -1,7 +1,22 @@
-# Minesweeper
-My own version of the game Minesweeper. It is not a public website. It only works with your computer when you are hosting it.
-The main language is Finnish in the code.
+# 💣 Minesweeper
+A custom version of the classic Minesweeper game - built to be played locally. This is not a public web application, it only works on your own machine when you host it yourself.
 
-The database works with file "game.db"
+# Project information
 
-Made by Julle98
+    Language choice: The code is written mainly in Finnish.
+
+    Database: Game data is stored in the SQLite file game.db.
+
+    Usage: The application runs locally. Does not include public hosting or web service.
+
+# Starting
+
+    Make sure you have the necessary dependencies installed.
+
+    Launch the application locally on your own machine.
+
+    Play and develop the game further if you wish!
+
+# Developer
+
+The project was made by Julle98
