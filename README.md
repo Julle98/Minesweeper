@@ -25,4 +25,4 @@ See the [LICENSE](LICENSE) file for full details.
 
 ## Developer
 
-The project was made by Julle98
+The project was made by Julle98 and helped by Copilot.
